@@ -1,0 +1,201 @@
+{"claim": "The Earth is the third planet from the Sun.", "label": "SUPPORTED", "gold_ids": ["test#0"]}
+{"claim": "The Earth is the fourth planet from the Sun.", "label": "REFUTED", "gold_ids": ["test#0"]}
+{"claim": "The Earth has a larger surface area than Jupiter.", "label": "REFUTED", "gold_ids": ["test#0"]}
+{"claim": "The Earth's exact age is 4.2 billion years.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "Water covers approximately 71 percent of Earth's surface.", "label": "SUPPORTED", "gold_ids": ["test#1"]}
+{"claim": "Water covers less than 20 percent of Earth's surface.", "label": "REFUTED", "gold_ids": ["test#1"]}
+{"claim": "Most of Earth's surface is covered by freshwater.", "label": "REFUTED", "gold_ids": ["test#1"]}
+{"claim": "Water covers exactly 70.8 percent of Earth's surface.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "The Amazon River is one of the world's largest rivers by discharge volume.", "label": "SUPPORTED", "gold_ids": ["test#2"]}
+{"claim": "The Amazon River is located entirely in Europe.", "label": "REFUTED", "gold_ids": ["test#2"]}
+{"claim": "The Amazon River has the longest name of any river.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "Mount Everest is the highest mountain above sea level.", "label": "SUPPORTED", "gold_ids": ["test#3"]}
+{"claim": "Mount Everest is located in Peru.", "label": "REFUTED", "gold_ids": ["test#3"]}
+{"claim": "Mount Everest is more than 10,000 meters tall.", "label": "REFUTED", "gold_ids": ["test#3"]}
+
+{"claim": "The Pacific Ocean is the largest ocean on Earth.", "label": "SUPPORTED", "gold_ids": ["test#4"]}
+{"claim": "The Atlantic Ocean is larger than the Pacific Ocean.", "label": "REFUTED", "gold_ids": ["test#4"]}
+{"claim": "The Pacific Ocean contains exactly 25,000 islands.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "India is the world's most populous country.", "label": "SUPPORTED", "gold_ids": ["test#5"]}
+{"claim": "India has a smaller population than every country in Europe.", "label": "REFUTED", "gold_ids": ["test#5"]}
+{"claim": "India became the world's most populous country in 2022.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "Tokyo is the capital and largest metropolitan area of Japan.", "label": "SUPPORTED", "gold_ids": ["test#6"]}
+{"claim": "Tokyo is the capital of South Korea.", "label": "REFUTED", "gold_ids": ["test#6"]}
+{"claim": "Tokyo has more than 50 million residents within its metropolitan area.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "The Sahara is the largest hot desert in the world.", "label": "SUPPORTED", "gold_ids": ["test#7"]}
+{"claim": "The Sahara is located in South America.", "label": "REFUTED", "gold_ids": ["test#7"]}
+{"claim": "The Sahara receives exactly 100 millimeters of rainfall every year.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "The Nile flows through northeastern Africa and empties into the Mediterranean Sea.", "label": "SUPPORTED", "gold_ids": ["test#8"]}
+{"claim": "The Nile empties into the Pacific Ocean.", "label": "REFUTED", "gold_ids": ["test#8"]}
+{"claim": "The Nile is exactly 6,900 kilometers long.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "Antarctica is the coldest continent on Earth.", "label": "SUPPORTED", "gold_ids": ["test#9"]}
+{"claim": "Antarctica is the hottest continent on Earth.", "label": "REFUTED", "gold_ids": ["test#9"]}
+{"claim": "Antarctica has exactly 15 million square kilometers of ice.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "Albert Einstein developed the theory of general relativity.", "label": "SUPPORTED", "gold_ids": ["test#10"]}
+{"claim": "Albert Einstein formulated the laws of motion.", "label": "REFUTED", "gold_ids": ["test#10"]}
+{"claim": "Einstein published general relativity in exactly 1916.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "Isaac Newton formulated the laws of motion and universal gravitation.", "label": "SUPPORTED", "gold_ids": ["test#11"]}
+{"claim": "Isaac Newton developed the theory of natural selection.", "label": "REFUTED", "gold_ids": ["test#11"]}
+{"claim": "Newton was born in London.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "Marie Curie conducted pioneering research on radioactivity.", "label": "SUPPORTED", "gold_ids": ["test#12"]}
+{"claim": "Marie Curie was primarily known for inventing the telephone.", "label": "REFUTED", "gold_ids": ["test#12"]}
+{"claim": "Marie Curie performed all of her research in Germany.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "Charles Darwin proposed the theory of evolution by natural selection.", "label": "SUPPORTED", "gold_ids": ["test#13"]}
+{"claim": "Charles Darwin rejected the concept of evolution.", "label": "REFUTED", "gold_ids": ["test#13"]}
+{"claim": "Darwin first proposed natural selection in 1840.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "The periodic table organizes chemical elements according to their atomic properties.", "label": "SUPPORTED", "gold_ids": ["test#14"]}
+{"claim": "The periodic table contains only biological elements.", "label": "REFUTED", "gold_ids": ["test#14"]}
+{"claim": "The periodic table was invented in the year 1800.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "Oxygen is essential for aerobic respiration in most complex organisms.", "label": "SUPPORTED", "gold_ids": ["test#15"]}
+{"claim": "Oxygen is unnecessary for aerobic respiration.", "label": "REFUTED", "gold_ids": ["test#15"]}
+{"claim": "All organisms require exactly 21 percent oxygen to survive.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "DNA carries genetic information in living organisms.", "label": "SUPPORTED", "gold_ids": ["test#16"]}
+{"claim": "DNA is primarily responsible for producing sunlight.", "label": "REFUTED", "gold_ids": ["test#16"]}
+{"claim": "Every organism contains exactly 3 billion DNA base pairs.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "Photosynthesis allows plants to convert light energy into chemical energy.", "label": "SUPPORTED", "gold_ids": ["test#17"]}
+{"claim": "Photosynthesis converts chemical energy directly into sound energy.", "label": "REFUTED", "gold_ids": ["test#17"]}
+{"claim": "Photosynthesis was first discovered in 1650.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "The human heart pumps blood throughout the circulatory system.", "label": "SUPPORTED", "gold_ids": ["test#18"]}
+{"claim": "The human heart is responsible for digesting food.", "label": "REFUTED", "gold_ids": ["test#18"]}
+{"claim": "The human heart beats exactly 80 times per minute in every adult.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "The human brain is the central organ of the nervous system.", "label": "SUPPORTED", "gold_ids": ["test#19"]}
+{"claim": "The human brain is part of the digestive system.", "label": "REFUTED", "gold_ids": ["test#19"]}
+{"claim": "The human brain weighs exactly 1.4 kilograms in every adult.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "The Roman Empire controlled large territories around the Mediterranean Sea.", "label": "SUPPORTED", "gold_ids": ["test#20"]}
+{"claim": "The Roman Empire was centered exclusively in South America.", "label": "REFUTED", "gold_ids": ["test#20"]}
+{"claim": "The Roman Empire contained exactly 50 provinces at its height.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "The French Revolution began in 1789.", "label": "SUPPORTED", "gold_ids": ["test#21"]}
+{"claim": "The French Revolution began in 1914.", "label": "REFUTED", "gold_ids": ["test#21"]}
+{"claim": "The French Revolution lasted exactly 11 years.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "The Industrial Revolution began in Britain during the eighteenth century.", "label": "SUPPORTED", "gold_ids": ["test#22"]}
+{"claim": "The Industrial Revolution began in Antarctica.", "label": "REFUTED", "gold_ids": ["test#22"]}
+{"claim": "The Industrial Revolution began specifically in Manchester in 1750.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "The ancient city of Rome was founded according to tradition in 753 BC.", "label": "SUPPORTED", "gold_ids": ["test#23"]}
+{"claim": "Rome was founded in 1492 AD according to Roman tradition.", "label": "REFUTED", "gold_ids": ["test#23"]}
+{"claim": "Rome was founded by exactly 500 settlers.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "The Great Wall of China consists of numerous walls and fortifications built over different periods.", "label": "SUPPORTED", "gold_ids": ["test#24"]}
+{"claim": "The Great Wall of China was built entirely during the twentieth century.", "label": "REFUTED", "gold_ids": ["test#24"]}
+{"claim": "The Great Wall is exactly 8,850 kilometers long.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "The printing press greatly increased the ability to produce books in Europe.", "label": "SUPPORTED", "gold_ids": ["test#25"]}
+{"claim": "The printing press made books impossible to reproduce.", "label": "REFUTED", "gold_ids": ["test#25"]}
+{"claim": "The first European printing press was built in Paris.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "The United Nations was established in 1945 after the Second World War.", "label": "SUPPORTED", "gold_ids": ["test#26"]}
+{"claim": "The United Nations was established in 1910.", "label": "REFUTED", "gold_ids": ["test#26"]}
+{"claim": "The United Nations originally had exactly 40 member states.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "The Cold War was a period of geopolitical tension between the United States and the Soviet Union.", "label": "SUPPORTED", "gold_ids": ["test#27"]}
+{"claim": "The Cold War was a military conflict fought directly between the United States and Soviet Union.", "label": "REFUTED", "gold_ids": ["test#27"]}
+{"claim": "The Cold War began exactly on January 1, 1947.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "The Berlin Wall divided East and West Berlin for several decades.", "label": "SUPPORTED", "gold_ids": ["test#28"]}
+{"claim": "The Berlin Wall divided Paris into two cities.", "label": "REFUTED", "gold_ids": ["test#28"]}
+{"claim": "The Berlin Wall was exactly 155 kilometers long.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "The Apollo 11 mission carried the first humans to the surface of the Moon.", "label": "SUPPORTED", "gold_ids": ["test#29"]}
+{"claim": "Apollo 11 was the first mission to land humans on Mars.", "label": "REFUTED", "gold_ids": ["test#29"]}
+{"claim": "Apollo 11 spent exactly seven days on the lunar surface.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "The World Wide Web was invented by Tim Berners-Lee.", "label": "SUPPORTED", "gold_ids": ["test#30"]}
+{"claim": "The World Wide Web was invented by Steve Jobs.", "label": "REFUTED", "gold_ids": ["test#30"]}
+{"claim": "Tim Berners-Lee created the World Wide Web in 1987.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "Linux is an operating system kernel originally created by Linus Torvalds.", "label": "SUPPORTED", "gold_ids": ["test#31"]}
+{"claim": "Linux was originally created by Bill Gates.", "label": "REFUTED", "gold_ids": ["test#31"]}
+{"claim": "Linux was first released commercially by IBM.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "Python is a high-level programming language known for its readable syntax.", "label": "SUPPORTED", "gold_ids": ["test#32"]}
+{"claim": "Python is a low-level assembly language.", "label": "REFUTED", "gold_ids": ["test#32"]}
+{"claim": "Python was created specifically for developing Android applications.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "The Internet consists of interconnected networks that communicate using standardized protocols.", "label": "SUPPORTED", "gold_ids": ["test#33"]}
+{"claim": "The Internet is a single computer located in the United States.", "label": "REFUTED", "gold_ids": ["test#33"]}
+{"claim": "The Internet uses exactly 10,000 independent networks.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "Artificial intelligence involves computational systems capable of performing tasks associated with human intelligence.", "label": "SUPPORTED", "gold_ids": ["test#34"]}
+{"claim": "Artificial intelligence refers exclusively to mechanical engines.", "label": "REFUTED", "gold_ids": ["test#34"]}
+{"claim": "Artificial intelligence was first developed in Japan in 1955.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "Machine learning allows computer systems to learn patterns from data.", "label": "SUPPORTED", "gold_ids": ["test#35"]}
+{"claim": "Machine learning requires that every rule be manually programmed.", "label": "REFUTED", "gold_ids": ["test#35"]}
+{"claim": "Machine learning was invented by a single researcher in 1972.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "A database is an organized collection of information that can be accessed and managed electronically.", "label": "SUPPORTED", "gold_ids": ["test#36"]}
+{"claim": "A database can contain only images.", "label": "REFUTED", "gold_ids": ["test#36"]}
+{"claim": "The first database was created specifically for banks.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "The central processing unit executes instructions in a computer program.", "label": "SUPPORTED", "gold_ids": ["test#37"]}
+{"claim": "The CPU is primarily responsible for storing all files permanently.", "label": "REFUTED", "gold_ids": ["test#37"]}
+{"claim": "Every CPU contains exactly eight processing cores.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "The binary number system uses only the digits zero and one.", "label": "SUPPORTED", "gold_ids": ["test#38"]}
+{"claim": "The binary number system uses the digits zero through nine.", "label": "REFUTED", "gold_ids": ["test#38"]}
+{"claim": "Binary numbers were first used in computers in 1930.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "Blockchain technology stores records in linked structures called blocks.", "label": "SUPPORTED", "gold_ids": ["test#39"]}
+{"claim": "Blockchain technology stores all records exclusively on paper.", "label": "REFUTED", "gold_ids": ["test#39"]}
+{"claim": "Every blockchain contains exactly one million blocks.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "Supply and demand are fundamental concepts in economic theory.", "label": "SUPPORTED", "gold_ids": ["test#40"]}
+{"claim": "Supply and demand are concepts used exclusively in biology.", "label": "REFUTED", "gold_ids": ["test#40"]}
+{"claim": "Supply always increases when prices increase.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "Inflation refers to a sustained increase in the general level of prices.", "label": "SUPPORTED", "gold_ids": ["test#41"]}
+{"claim": "Inflation means that all individual prices always decrease.", "label": "REFUTED", "gold_ids": ["test#41"]}
+{"claim": "Inflation is considered significant only when prices rise by exactly 5 percent.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "Gross domestic product measures the value of goods and services produced within an economy.", "label": "SUPPORTED", "gold_ids": ["test#42"]}
+{"claim": "GDP measures only the physical size of a country's territory.", "label": "REFUTED", "gold_ids": ["test#42"]}
+{"claim": "GDP measures exactly the total wealth owned by citizens.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "A market economy relies substantially on interactions between buyers and sellers.", "label": "SUPPORTED", "gold_ids": ["test#43"]}
+{"claim": "A market economy completely eliminates interactions between buyers and sellers.", "label": "REFUTED", "gold_ids": ["test#43"]}
+{"claim": "Every market economy has exactly 100 million buyers.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "The stock market provides a mechanism for trading shares of publicly listed companies.", "label": "SUPPORTED", "gold_ids": ["test#44"]}
+{"claim": "The stock market exists only for trading physical goods.", "label": "REFUTED", "gold_ids": ["test#44"]}
+{"claim": "Every stock market transaction is conducted in cash.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "Chess is a strategy board game played between two opponents.", "label": "SUPPORTED", "gold_ids": ["test#45"]}
+{"claim": "Chess is normally played by four opponents simultaneously.", "label": "REFUTED", "gold_ids": ["test#45"]}
+{"claim": "Chess was invented in exactly 600 AD.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "Football is one of the most widely played sports in the world.", "label": "SUPPORTED", "gold_ids": ["test#46"]}
+{"claim": "Football is played exclusively in North America.", "label": "REFUTED", "gold_ids": ["test#46"]}
+{"claim": "Football has exactly 250 million active players worldwide.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "The Olympic Games are an international multi-sport event held in both summer and winter editions.", "label": "SUPPORTED", "gold_ids": ["test#47"]}
+{"claim": "The Olympic Games are exclusively a single-sport competition.", "label": "REFUTED", "gold_ids": ["test#47"]}
+{"claim": "The Olympic Games have always been held every two years.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "The piano is a musical instrument that produces sound by striking strings with hammers.", "label": "SUPPORTED", "gold_ids": ["test#48"]}
+{"claim": "A piano produces sound by blowing air through pipes.", "label": "REFUTED", "gold_ids": ["test#48"]}
+{"claim": "Every modern piano contains exactly 88 strings.", "label": "NOT_ENOUGH_INFO", "gold_ids": []}
+
+{"claim": "Literature includes written works such as novels, poetry, plays, and essays.", "label": "SUPPORTED", "gold_ids": ["test#49"]}
+{"claim": "Literature consists exclusively of mathematical equations.", "label": "REFUTED", "gold_ids": ["test#49"]}
+{"claim": "Every literary work is written as a novel.", "label": "REFUTED", "gold_ids": ["test#49"]}
