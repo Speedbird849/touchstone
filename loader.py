@@ -10,4 +10,4 @@ def load_passages(corpus_dir="corpus"):
 
 if __name__ == "__main__":
     for p in load_passages():
-        print(p["id"], "->", p["text"][:60])
+        print(p["id"], "->", p["text"][:100])
