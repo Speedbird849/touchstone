@@ -1,7 +1,5 @@
 import json
 from collections import Counter
-from unittest import result
-from unittest import result
 
 from loader import load_passages
 from retriever import Retriever

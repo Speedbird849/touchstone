@@ -16,19 +16,28 @@ Reply with ONLY a JSON object and no other text. Write the rationale FIRST, then
 
 
 def parse(text):
-    m = re.search(r"\{.*\}", text, re.DOTALL)
+    text_clean = text.strip()
+    m = re.search(r"\{.*\}", text_clean, re.DOTALL)
     if m:
-        try:
-            out = json.loads(m.group(0))
-            if out.get("verdict") in VALID:
-                out["rationale"] = next((v for k, v in out.items() if k.startswith("rationa")), "")
-                out.setdefault("evidence_ids", [])
-                return out
-        except json.JSONDecodeError:
-            pass
-    v = re.search(r'"verdict"\s*:\s*"(SUPPORTED|REFUTED|NOT_ENOUGH_INFO)"', text)
-    if v:  # malformed JSON, but the verdict is clearly there
-        return {"verdict": v.group(1), "evidence_ids": [], "rationale": text.strip()}
+        candidate = m.group(0)
+        for s in [candidate, candidate.replace(r'\"', '"')]:
+            try:
+                out = json.loads(s)
+                if out.get("verdict") in VALID:
+                    out["rationale"] = next((v for k, v in out.items() if k.startswith("rationa")), "")
+                    out.setdefault("evidence_ids", [])
+                    return out
+            except json.JSONDecodeError:
+                pass
+
+    v = re.search(r'\\?"?verdict\\?"?\s*:\s*\\?"?(SUPPORTED|REFUTED|NOT_ENOUGH_INFO)\\?"?', text_clean)
+    if v:
+        return {"verdict": v.group(1), "evidence_ids": [], "rationale": text_clean}
+
+    first_line = text_clean.split("\n")[0].strip()
+    if first_line in VALID:
+        return {"verdict": first_line, "evidence_ids": [], "rationale": text_clean[len(first_line):].strip()}
+
     return None
 
 def judge(claim, evidence, retries=1):
