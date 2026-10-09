@@ -1,3 +1,6 @@
+import warnings
+warnings.filterwarnings("ignore", message="urllib3 v2 only supports OpenSSL")
+
 import numpy as np
 from sentence_transformers import SentenceTransformer
 from loader import load_passages
@@ -13,7 +16,7 @@ class Retriever:
 
     def search(self, query, k=3):
         q = self.model.encode([query], normalize_embeddings=True)[0]
-        scores = self.vecs @ q
+        scores = np.dot(self.vecs, q)
         top = np.argsort(-scores)[:k]
         return [{**self.passages[i], "score": float(scores[i])} for i in top]
 

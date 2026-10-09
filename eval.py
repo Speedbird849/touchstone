@@ -1,3 +1,6 @@
+import warnings
+warnings.filterwarnings("ignore", message="urllib3 v2 only supports OpenSSL")
+
 import json
 from collections import Counter
 
@@ -5,9 +8,6 @@ from loader import load_passages
 from retriever import Retriever
 from verdict import judge
 from tqdm import tqdm
-
-import warnings
-warnings.filterwarnings("ignore", message="urllib3 v2 only supports OpenSSL")
 
 
 def run(path="evalset_v2.jsonl", k=3):
