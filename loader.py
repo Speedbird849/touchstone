@@ -10,10 +10,18 @@ def load_passages(corpus_path="corpus"):
             if not chunk:
                 continue
             if chunk.startswith("[") and "]" in chunk:
-                p_id, text = chunk[1:].split("]", 1)
-                passages.append({"id": p_id.strip(), "text": text.strip()})
+                header, text = chunk[1:].split("]", 1)
+                if "|" in header:
+                    p_id, sids_part = header.split("|", 1)
+                    p_id = p_id.strip()
+                    sids = [s.strip() for s in sids_part.replace("sids:", "").split(",") if s.strip()]
+                else:
+                    p_id = header.strip()
+                    sids = [p_id]
+                passages.append({"id": p_id, "sentence_ids": sids, "text": text.strip()})
             else:
-                passages.append({"id": f"{path.stem}#{i}", "text": chunk})
+                p_id = f"{path.stem}#{i}"
+                passages.append({"id": p_id, "sentence_ids": [p_id], "text": chunk})
     return passages
 
 if __name__ == "__main__":

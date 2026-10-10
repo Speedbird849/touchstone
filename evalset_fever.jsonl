@@ -6,7 +6,7 @@
 {"claim": "Alan Metter directed Billboard Dad.", "label": "SUPPORTED", "gold_ids": ["Billboard_Dad#0"]}
 {"claim": "There was a song performed on Britain's Got Talent called Rhythm Nation.", "label": "SUPPORTED", "gold_ids": ["Rhythm_Nation#23"]}
 {"claim": "Riddick is in a film.", "label": "SUPPORTED", "gold_ids": ["Riddick_-LRB-character-RRB-#0"]}
-{"claim": "Fist of Legend is a remake of a film.", "label": "SUPPORTED", "gold_ids": ["Fist_of_Fury#0", "Fist_of_Legend#2"]}
+{"claim": "Fist of Legend is a remake of a film.", "label": "SUPPORTED", "gold_ids": ["Fist_of_Legend#2", "Fist_of_Fury#0"]}
 {"claim": "The Residenztheater is where Hedda Gabler's world premiere took place.", "label": "SUPPORTED", "gold_ids": ["Hedda_Gabler#1"]}
 {"claim": "Terry Crews was a football player.", "label": "SUPPORTED", "gold_ids": ["Terry_Crews#9"]}
 {"claim": "The first inauguration of Bill Clinton made him President.", "label": "SUPPORTED", "gold_ids": ["United_States_presidential_inauguration#0", "First_inauguration_of_Bill_Clinton#0"]}
@@ -26,20 +26,20 @@
 {"claim": "Rob Sheridan was born in the late 1970s.", "label": "SUPPORTED", "gold_ids": ["Rob_Sheridan#0"]}
 {"claim": "Liam Neeson received nominations for three Golden Globe Awards.", "label": "SUPPORTED", "gold_ids": ["Liam_Neeson#11"]}
 {"claim": "The Sterile Cuckoo was adapted from a novel written by an American novelist.", "label": "SUPPORTED", "gold_ids": ["The_Sterile_Cuckoo#3", "John_Nichols_-LRB-writer-RRB-#0"]}
-{"claim": "Stripes had a person appear in it.", "label": "SUPPORTED", "gold_ids": ["Judge_Reinhold#0", "Conrad_Dunn#3", "Conrad_Dunn#1", "Stripes_-LRB-film-RRB-#1", "John_Diehl#0", "John_Larroquette#0", "John_Larroquette#2", "Conrad_Dunn#5", "John_Diehl#5", "Conrad_Dunn#4", "John_Diehl#4", "John_Diehl#1", "John_Larroquette#1", "Conrad_Dunn#2", "Conrad_Dunn#0"]}
+{"claim": "Stripes had a person appear in it.", "label": "SUPPORTED", "gold_ids": ["Conrad_Dunn#2", "John_Larroquette#2", "John_Larroquette#0", "Conrad_Dunn#3", "John_Diehl#5", "John_Larroquette#1", "John_Diehl#0", "John_Diehl#4", "Conrad_Dunn#1", "Judge_Reinhold#0", "Stripes_-LRB-film-RRB-#1", "Conrad_Dunn#5", "Conrad_Dunn#0", "John_Diehl#1", "Conrad_Dunn#4"]}
 {"claim": "John Deighton developed swelling of the legs.", "label": "SUPPORTED", "gold_ids": ["John_Deighton#24"]}
 {"claim": "Stripes featured Conrad Dunn.", "label": "SUPPORTED", "gold_ids": ["Stripes_-LRB-film-RRB-#1"]}
 {"claim": "Billboard Dad stars Mary-Kate Olsen.", "label": "SUPPORTED", "gold_ids": ["Billboard_Dad#0"]}
-{"claim": "Global warming causes the abandonment of populated areas due to rising sea levels.", "label": "SUPPORTED", "gold_ids": ["Global_warming#15", "Global_warming#0"]}
+{"claim": "Global warming causes the abandonment of populated areas due to rising sea levels.", "label": "SUPPORTED", "gold_ids": ["Global_warming#0", "Global_warming#15"]}
 {"claim": "Star Trek: Discovery is a series.", "label": "SUPPORTED", "gold_ids": ["Star_Trek-COLON-_Discovery#1"]}
 {"claim": "A rapper was featured on a crossover hit by Chaka Khan.", "label": "SUPPORTED", "gold_ids": ["Chaka_Khan#4"]}
 {"claim": "Albert S. Ruddy is regarded as a television producer.", "label": "SUPPORTED", "gold_ids": ["Albert_S._Ruddy#0"]}
 {"claim": "Camden, New Jersey is a city.", "label": "SUPPORTED", "gold_ids": ["Camden,_New_Jersey#2"]}
 {"claim": "Janet Leigh was from America.", "label": "SUPPORTED", "gold_ids": ["Janet_Leigh#0"]}
 {"claim": "Steve Wozniak built the Apple II.", "label": "SUPPORTED", "gold_ids": ["Steve_Wozniak#5"]}
-{"claim": "Sean Penn was in crime drama films.", "label": "SUPPORTED", "gold_ids": ["At_Close_Range#0", "State_of_Grace_-LRB-film-RRB-#0", "Sean_Penn#5"]}
+{"claim": "Sean Penn was in crime drama films.", "label": "SUPPORTED", "gold_ids": ["Sean_Penn#5", "At_Close_Range#0", "State_of_Grace_-LRB-film-RRB-#0"]}
 {"claim": "Jos\u00e9 Ferrer was a director.", "label": "SUPPORTED", "gold_ids": ["Jos\u00e9_Ferrer#0"]}
-{"claim": "During the 49ers 63rd season in the National Football League Colin Kaepernick became a starter.", "label": "SUPPORTED", "gold_ids": ["2012_San_Francisco_49ers_season#0", "Colin_Kaepernick#5"]}
+{"claim": "During the 49ers 63rd season in the National Football League Colin Kaepernick became a starter.", "label": "SUPPORTED", "gold_ids": ["Colin_Kaepernick#5", "2012_San_Francisco_49ers_season#0"]}
 {"claim": "Rhythm Nation was performed on Britain's Got Talent.", "label": "SUPPORTED", "gold_ids": ["Rhythm_Nation#23"]}
 {"claim": "Ed Wood featured the performance of Martin Landau.", "label": "SUPPORTED", "gold_ids": ["Ed_Wood_-LRB-film-RRB-#1"]}
 {"claim": "AMGTV has drama television programming.", "label": "SUPPORTED", "gold_ids": ["AMGTV#0"]}
@@ -52,7 +52,7 @@
 {"claim": "There is a film called A River Runs Through It.", "label": "SUPPORTED", "gold_ids": ["A_River_Runs_Through_It_-LRB-film-RRB-#0"]}
 {"claim": "Kenneth Lonergan is a man.", "label": "SUPPORTED", "gold_ids": ["Kenneth_Lonergan#2"]}
 {"claim": "Bea Arthur was born under a different name.", "label": "SUPPORTED", "gold_ids": ["Bea_Arthur#0"]}
-{"claim": "The first inauguration of Bill Clinton was in Washington, D.C. at noon.", "label": "SUPPORTED", "gold_ids": ["United_States_presidential_inauguration#0", "First_inauguration_of_Bill_Clinton#0", "United_States_presidential_inauguration#3"]}
+{"claim": "The first inauguration of Bill Clinton was in Washington, D.C. at noon.", "label": "SUPPORTED", "gold_ids": ["United_States_presidential_inauguration#3", "United_States_presidential_inauguration#0", "First_inauguration_of_Bill_Clinton#0"]}
 {"claim": "Tilda Swinton is an artist.", "label": "SUPPORTED", "gold_ids": ["Tilda_Swinton#0"]}
 {"claim": "Bhagat Singh was an Indian citizen.", "label": "SUPPORTED", "gold_ids": ["Bhagat_Singh#0"]}
 {"claim": "There is an epic historical romantic drama named Australia that is a Baz Luhrmann film.", "label": "SUPPORTED", "gold_ids": ["Baz_Luhrmann#2"]}
@@ -63,12 +63,12 @@
 {"claim": "Johanna Braddy was in a TV series.", "label": "SUPPORTED", "gold_ids": ["Johanna_Braddy#4"]}
 {"claim": "Britt Robertson is an actress.", "label": "SUPPORTED", "gold_ids": ["Britt_Robertson#15"]}
 {"claim": "Otto I, Holy Roman Emperor engaged in war.", "label": "SUPPORTED", "gold_ids": ["Otto_I,_Holy_Roman_Emperor#11"]}
-{"claim": "Prescott, Arizona is in Arizona.", "label": "SUPPORTED", "gold_ids": ["Prescott,_Arizona#4", "Tucson,_Arizona#0"]}
+{"claim": "Prescott, Arizona is in Arizona.", "label": "SUPPORTED", "gold_ids": ["Tucson,_Arizona#0", "Prescott,_Arizona#4"]}
 {"claim": "Janet Leigh was a person.", "label": "SUPPORTED", "gold_ids": ["Janet_Leigh#2"]}
 {"claim": "Vedam is a film.", "label": "SUPPORTED", "gold_ids": ["Vedam_-LRB-film-RRB-#1"]}
 {"claim": "Joe Rogan moved to Los Angeles in May of 1994.", "label": "SUPPORTED", "gold_ids": ["Joe_Rogan#7"]}
 {"claim": "Veeru Devgan is an action film director.", "label": "SUPPORTED", "gold_ids": ["Veeru_Devgan#0"]}
-{"claim": "The Bee Gees produced music.", "label": "SUPPORTED", "gold_ids": ["Spicks_and_Specks_-LRB-song-RRB-#0", "Bee_Gees#11"]}
+{"claim": "The Bee Gees produced music.", "label": "SUPPORTED", "gold_ids": ["Bee_Gees#11", "Spicks_and_Specks_-LRB-song-RRB-#0"]}
 {"claim": "Damon Albarn collaborated with Brian Eno on his album Everyday Robots.", "label": "SUPPORTED", "gold_ids": ["Damon_Albarn#17"]}
 {"claim": "DNA is an album.", "label": "SUPPORTED", "gold_ids": ["DNA_-LRB-Little_Mix_album-RRB-#4"]}
 {"claim": "Omar Khadr was convicted.", "label": "SUPPORTED", "gold_ids": ["Omar_Khadr#18"]}
@@ -81,7 +81,7 @@
 {"claim": "Kerplunk is by Green Day.", "label": "SUPPORTED", "gold_ids": ["Kerplunk_-LRB-album-RRB-#0"]}
 {"claim": "Lockheed Martin's CEO is now a person born in December.", "label": "SUPPORTED", "gold_ids": ["Marillyn_Hewson#0", "Lockheed_Martin#4"]}
 {"claim": "Poldark has three series.", "label": "SUPPORTED", "gold_ids": ["Poldark_-LRB-2015_TV_series-RRB-#6"]}
-{"claim": "Samwell Tarly appears in novels.", "label": "SUPPORTED", "gold_ids": ["A_Clash_of_Kings#0", "Samwell_Tarly#4"]}
+{"claim": "Samwell Tarly appears in novels.", "label": "SUPPORTED", "gold_ids": ["Samwell_Tarly#4", "A_Clash_of_Kings#0"]}
 {"claim": "Martin Van Buren held office.", "label": "SUPPORTED", "gold_ids": ["Martin_Van_Buren#1"]}
 {"claim": "Britt Robertson is an actress.", "label": "SUPPORTED", "gold_ids": ["Britt_Robertson#1"]}
 {"claim": "The Bahamas is an internationally recognized state that comprises a series of islands that form the Lucayan Archipelago.", "label": "SUPPORTED", "gold_ids": ["The_Bahamas#0"]}
@@ -90,12 +90,12 @@
 {"claim": "Matthew Gray Gubler is a model.", "label": "SUPPORTED", "gold_ids": ["Matthew_Gray_Gubler#0"]}
 {"claim": "The Hanford Site contributes to the LIGO Hanford Observatory.", "label": "SUPPORTED", "gold_ids": ["Hanford_Site#23"]}
 {"claim": "Ludwig van Beethoven was taught by his father Johann van Beethoven and the composer Christian Gottlob Neefe.", "label": "SUPPORTED", "gold_ids": ["Ludwig_van_Beethoven#5"]}
-{"claim": "Matteo Renzi was once the Prime Minister of Italy.", "label": "SUPPORTED", "gold_ids": ["Italian_constitutional_referendum,_2016#4", "Matteo_Renzi#1"]}
-{"claim": "Tinker Tailor Soldier Spy stars an actor.", "label": "SUPPORTED", "gold_ids": ["Gary_Oldman#0", "Tinker_Tailor_Soldier_Spy_-LRB-film-RRB-#2"]}
-{"claim": "Eric Church is a singer.", "label": "SUPPORTED", "gold_ids": ["Cold_One#0", "Eric_Church#9", "Like_a_Wrecking_Ball#0", "Give_Me_Back_My_Hometown#0", "Talladega_-LRB-song-RRB-#0"]}
+{"claim": "Matteo Renzi was once the Prime Minister of Italy.", "label": "SUPPORTED", "gold_ids": ["Matteo_Renzi#1", "Italian_constitutional_referendum,_2016#4"]}
+{"claim": "Tinker Tailor Soldier Spy stars an actor.", "label": "SUPPORTED", "gold_ids": ["Tinker_Tailor_Soldier_Spy_-LRB-film-RRB-#2", "Gary_Oldman#0"]}
+{"claim": "Eric Church is a singer.", "label": "SUPPORTED", "gold_ids": ["Cold_One#0", "Eric_Church#9", "Talladega_-LRB-song-RRB-#0", "Like_a_Wrecking_Ball#0", "Give_Me_Back_My_Hometown#0"]}
 {"claim": "Veeru Devgan choreographs stunts.", "label": "SUPPORTED", "gold_ids": ["Veeru_Devgan#0"]}
-{"claim": "Janet Leigh was an actress.", "label": "SUPPORTED", "gold_ids": ["Act_of_Violence#0", "Janet_Leigh#6"]}
-{"claim": "Larry Wilmore is a person who performs comedy.", "label": "SUPPORTED", "gold_ids": ["The_Daily_Show#2", "The_Nightly_Show_with_Larry_Wilmore#0", "Larry_Wilmore#1"]}
+{"claim": "Janet Leigh was an actress.", "label": "SUPPORTED", "gold_ids": ["Janet_Leigh#6", "Act_of_Violence#0"]}
+{"claim": "Larry Wilmore is a person who performs comedy.", "label": "SUPPORTED", "gold_ids": ["The_Nightly_Show_with_Larry_Wilmore#0", "The_Daily_Show#2", "Larry_Wilmore#1"]}
 {"claim": "Marvel vs. Capcom: Infinite is part of a series.", "label": "SUPPORTED", "gold_ids": ["Marvel_vs._Capcom-COLON-_Infinite#11"]}
 {"claim": "Tool is a band.", "label": "SUPPORTED", "gold_ids": ["Tool_-LRB-band-RRB-#1"]}
 {"claim": "Jackie (2016 film) was directed by Peter Jackson.", "label": "REFUTED", "gold_ids": ["Jackie_-LRB-2016_film-RRB-#0"]}
@@ -113,13 +113,13 @@
 {"claim": "Shawn Carlson is a squid.", "label": "REFUTED", "gold_ids": ["Shawn_Carlson#0"]}
 {"claim": "Recovery is an Eminem song.", "label": "REFUTED", "gold_ids": ["Recovery_-LRB-Eminem_album-RRB-#8"]}
 {"claim": "Highway to Heaven is an American movie series.", "label": "REFUTED", "gold_ids": ["Highway_to_Heaven#0"]}
-{"claim": "The New Orleans Pelicans play in the Eastern Conference of the NBA.", "label": "REFUTED", "gold_ids": ["New_Orleans_Pelicans#1", "Western_Conference_-LRB-NBA-RRB-#20", "Western_Conference_-LRB-NBA-RRB-#21"]}
+{"claim": "The New Orleans Pelicans play in the Eastern Conference of the NBA.", "label": "REFUTED", "gold_ids": ["New_Orleans_Pelicans#1", "Western_Conference_-LRB-NBA-RRB-#21", "Western_Conference_-LRB-NBA-RRB-#20"]}
 {"claim": "Finding Dory was written by Andrei Zvyagintsev.", "label": "REFUTED", "gold_ids": ["Finding_Dory#1"]}
-{"claim": "Lithuanians are Mediterranean.", "label": "REFUTED", "gold_ids": ["Lithuania#0", "Lithuania#2", "Lithuania#1", "Lithuanians#0"]}
+{"claim": "Lithuanians are Mediterranean.", "label": "REFUTED", "gold_ids": ["Lithuania#0", "Lithuania#1", "Lithuanians#0", "Lithuania#2"]}
 {"claim": "Aleister Crowley died on October 12, 1874.", "label": "REFUTED", "gold_ids": ["Aleister_Crowley#20"]}
 {"claim": "The Lincoln-Douglas debates happened in Milton", "label": "REFUTED", "gold_ids": ["Lincoln\u2013Douglas_debates#18"]}
 {"claim": "Daggering is a new country.", "label": "REFUTED", "gold_ids": ["Daggering#0"]}
-{"claim": "Bethany Hamilton's biopic wasn't directed by Sean McNamara.", "label": "REFUTED", "gold_ids": ["Bethany_Hamilton#2", "Soul_Surfer_-LRB-film-RRB-#0"]}
+{"claim": "Bethany Hamilton's biopic wasn't directed by Sean McNamara.", "label": "REFUTED", "gold_ids": ["Soul_Surfer_-LRB-film-RRB-#0", "Bethany_Hamilton#2"]}
 {"claim": "Emma Watson was killed in 1990.", "label": "REFUTED", "gold_ids": ["Emma_Watson#15"]}
 {"claim": "Riverdale is an original work.", "label": "REFUTED", "gold_ids": ["Riverdale_-LRB-2017_TV_series-RRB-#0"]}
 {"claim": "Aleister Crowley died on October 12, 1874.", "label": "REFUTED", "gold_ids": ["Aleister_Crowley#8"]}
@@ -163,15 +163,15 @@
 {"claim": "Fantastic Four (2005 film) was released only in Australia.", "label": "REFUTED", "gold_ids": ["Fantastic_Four_-LRB-2005_film-RRB-#7"]}
 {"claim": "Fred Armisen is a frog.", "label": "REFUTED", "gold_ids": ["Fred_Armisen#6"]}
 {"claim": "Kuching is a province of Taiwan.", "label": "REFUTED", "gold_ids": ["Kuching#0"]}
-{"claim": "Stripes was the first significant television role for at least one actor.", "label": "REFUTED", "gold_ids": ["Stripes_-LRB-film-RRB-#1", "Stripes_-LRB-film-RRB-#0"]}
-{"claim": "Girl is by Waluigi.", "label": "REFUTED", "gold_ids": ["Marilyn_Monroe_-LRB-Pharrell_Williams_song-RRB-#0", "Marilyn_Monroe_-LRB-Pharrell_Williams_song-RRB-#2", "Girl_-LRB-Pharrell_Williams_album-RRB-#10"]}
+{"claim": "Stripes was the first significant television role for at least one actor.", "label": "REFUTED", "gold_ids": ["Stripes_-LRB-film-RRB-#0", "Stripes_-LRB-film-RRB-#1"]}
+{"claim": "Girl is by Waluigi.", "label": "REFUTED", "gold_ids": ["Girl_-LRB-Pharrell_Williams_album-RRB-#10", "Marilyn_Monroe_-LRB-Pharrell_Williams_song-RRB-#0", "Marilyn_Monroe_-LRB-Pharrell_Williams_song-RRB-#2"]}
 {"claim": "Sheryl Lee has yet to appear in a film.", "label": "REFUTED", "gold_ids": ["Sheryl_Lee#5"]}
-{"claim": "Basildon is in Denmark.", "label": "REFUTED", "gold_ids": ["Basildon#9", "Billericay#0"]}
+{"claim": "Basildon is in Denmark.", "label": "REFUTED", "gold_ids": ["Billericay#0", "Basildon#9"]}
 {"claim": "Nuuk is outside of Greenland.", "label": "REFUTED", "gold_ids": ["Nuuk#0"]}
 {"claim": "Matthew Gray Gubler is not a model.", "label": "REFUTED", "gold_ids": ["Matthew_Gray_Gubler#0"]}
 {"claim": "Saxony is a horse.", "label": "REFUTED", "gold_ids": ["Saxony#8"]}
 {"claim": "AMGTV does not have drama television programming.", "label": "REFUTED", "gold_ids": ["AMGTV#0"]}
-{"claim": "Basildon is far away from England.", "label": "REFUTED", "gold_ids": ["Central_London#0", "Basildon#3"]}
+{"claim": "Basildon is far away from England.", "label": "REFUTED", "gold_ids": ["Basildon#3", "Central_London#0"]}
 {"claim": "Arizona is not a state.", "label": "REFUTED", "gold_ids": ["Arizona#2"]}
 {"claim": "The Dark Tower has remained unadapted to film.", "label": "REFUTED", "gold_ids": ["The_Dark_Tower_-LRB-2017_film-RRB-#6"]}
 {"claim": "Bessie Smith was born on September 26, 1937.", "label": "REFUTED", "gold_ids": ["Bessie_Smith#1"]}
@@ -192,7 +192,7 @@
 {"claim": "Savages was exclusively a German film.", "label": "REFUTED", "gold_ids": ["Savages_-LRB-2012_film-RRB-#3"]}
 {"claim": "Jack Falahee's middle name is Bryan.", "label": "REFUTED", "gold_ids": ["Jack_Falahee#0"]}
 {"claim": "The Adventures of Pluto Nash stars an actor that died in 1961.", "label": "REFUTED", "gold_ids": ["The_Adventures_of_Pluto_Nash#2"]}
-{"claim": "Both hosts of Weekly Idol were born in 1983.", "label": "REFUTED", "gold_ids": ["Defconn#0", "Weekly_Idol#0", "Weekly_Idol#1"]}
+{"claim": "Both hosts of Weekly Idol were born in 1983.", "label": "REFUTED", "gold_ids": ["Weekly_Idol#0", "Defconn#0", "Weekly_Idol#1"]}
 {"claim": "Amyotrophic lateral sclerosis is a cure.", "label": "REFUTED", "gold_ids": ["Amyotrophic_lateral_sclerosis#0"]}
 {"claim": "In the End was released in 1700.", "label": "REFUTED", "gold_ids": ["In_the_End#1"]}
 {"claim": "The French Resistance executed zero acts of sabotage.", "label": "REFUTED", "gold_ids": ["French_Resistance#6"]}

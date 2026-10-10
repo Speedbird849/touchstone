@@ -30,7 +30,7 @@ def run(eval_path="evalset_v2.jsonl", corpus_path="corpus/test.txt", k=3, mode="
         correct += got == row["label"]
         if row["gold_ids"]:
             n_gold += 1
-            hits += any(p["id"] in row["gold_ids"] for p in evidence)
+            hits += any(any(gid in p.get("sentence_ids", [p["id"]]) for gid in row["gold_ids"]) for p in evidence)
         if got != row["label"]:
             tqdm.write(f"MISS  want={row['label']}  got={got}  | {row['claim']}\n      why: {result.get('rationale', result)}")
         bar.set_postfix(acc=f"{correct / done:.0%}", tok_s=f"{toks / max(gen_secs, 1e-9):.0f}")
