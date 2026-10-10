@@ -10,8 +10,8 @@ from verdict import judge
 from tqdm import tqdm
 
 
-def run(eval_path="evalset_v2.jsonl", corpus_path="corpus/test.txt", k=3):
-    retriever = Retriever(load_passages(corpus_path))
+def run(eval_path="evalset_v2.jsonl", corpus_path="corpus/test.txt", k=3, mode="hybrid"):
+    retriever = Retriever(load_passages(corpus_path), mode=mode)
     rows = [json.loads(line) for line in open(eval_path) if line.strip()]
 
     correct = hits = n_gold = done = 0
@@ -45,6 +45,8 @@ def run(eval_path="evalset_v2.jsonl", corpus_path="corpus/test.txt", k=3):
 if __name__ == "__main__":
     import sys
     if "--fever" in sys.argv:
-        run(eval_path="evalset_fever.jsonl", corpus_path="corpus/fever.txt")
+        k = 5 if "--k5" in sys.argv else 3
+        mode = "dense" if "--dense" in sys.argv else "bm25" if "--bm25" in sys.argv else "hybrid"
+        run(eval_path="evalset_fever.jsonl", corpus_path="corpus/fever.txt", k=k, mode=mode)
     else:
         run()
