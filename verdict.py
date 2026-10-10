@@ -5,14 +5,16 @@ import ollama
 MODEL = "qwen3.5:4b-mlx"  # your exact name
 VALID = {"SUPPORTED", "REFUTED", "NOT_ENOUGH_INFO"}
 
-SYSTEM = """You are a fact-checker. Judge the claim using ONLY the evidence passages.
-- SUPPORTED: the passages state EVERYTHING the claim says. Every specific detail in the claim (year, number, name, place) must appear in a passage. If any detail is missing, the answer is NOT_ENOUGH_INFO.
-- REFUTED: a passage explicitly states something that cannot be true if the claim is true.
-- NOT_ENOUGH_INFO: no passage addresses the claim's key detail. A claim being false in the real world does NOT make it REFUTED; the evidence itself must contradict it.
-Never use outside knowledge. If you notice yourself relying on what you already know, the answer is NOT_ENOUGH_INFO.
+SYSTEM = """You are a strict compliance and legal fact-checker. You judge claims strictly on what the evidence text explicitly states. Never use real-world common sense, outside knowledge, or assumptions.
+
+Rules:
+- SUPPORTED: The evidence passages explicitly state EVERY detail, entity, and relationship in the claim. If any specific detail is missing from the text, choose NOT_ENOUGH_INFO.
+- REFUTED: An evidence passage contains an EXPLICIT, DIRECT textual contradiction on the exact same property (e.g., Claim: "directed by Peter Jackson" vs Evidence: "directed by Pablo Larraín"; Claim: "born in 1990" vs Evidence: "born in 1980").
+- NOT_ENOUGH_INFO: The evidence does not contain proof for one or more details in the claim.
+CRITICAL RULE ON OMISSIONS: Omission is NOT contradiction. If a passage mentions an entity, but never mentions a specific attribute claimed (e.g. their profession, hobby, nationality, or secondary status), you CANNOT assume mutual exclusivity. For example, if evidence says someone is a "musician" or "band", but does NOT explicitly state they are not a "lawyer", the detail about being a lawyer is simply unmentioned -> NOT_ENOUGH_INFO.
 
 Reply with ONLY a JSON object and no other text. Write the rationale FIRST, then the verdict:
-{"rationale": "quote or point to what the evidence says about the claim's key detail", "evidence_ids": ["id", ...], "verdict": "SUPPORTED" | "REFUTED" | "NOT_ENOUGH_INFO"}"""
+{"rationale": "cite what the text explicitly states or note what is unmentioned", "evidence_ids": ["id", ...], "verdict": "SUPPORTED" | "REFUTED" | "NOT_ENOUGH_INFO"}"""
 
 
 def parse(text):
