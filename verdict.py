@@ -8,26 +8,15 @@ from pydantic import BaseModel, Field, ValidationError
 
 MODEL = os.getenv("OLLAMA_MODEL", "qwen3.5:4b-mlx")
 
-
 class Verdict(BaseModel):
     rationale: str = Field(description="Cite what the text explicitly states or note what is unmentioned")
     evidence_ids: list[str] = Field(default_factory=list, description="IDs of evidence passages used")
     verdict: Literal["SUPPORTED", "REFUTED", "NOT_ENOUGH_INFO"]
 
-
 SCHEMA = Verdict.model_json_schema()
 
-SYSTEM = """You are a strict compliance and legal fact-checker. You judge claims strictly on what the evidence text explicitly states. Never use real-world common sense, outside knowledge, or assumptions.
-
-Rules:
-- SUPPORTED: The evidence passages explicitly state EVERY detail, entity, and relationship in the claim. If any specific detail is missing from the text, choose NOT_ENOUGH_INFO.
-- REFUTED: An evidence passage contains an EXPLICIT, DIRECT textual contradiction on the exact same property (e.g., Claim: "directed by Peter Jackson" vs Evidence: "directed by Pablo Larraín"; Claim: "born in 1990" vs Evidence: "born in 1980").
-- NOT_ENOUGH_INFO: The evidence does not contain proof for one or more details in the claim.
-CRITICAL RULE ON OMISSIONS: Omission is NOT contradiction. If a passage mentions an entity, but never mentions a specific attribute claimed (e.g. their profession, hobby, nationality, or secondary status), you CANNOT assume mutual exclusivity. For example, if evidence says someone is a "musician" or "band", but does NOT explicitly state they are not a "lawyer", the detail about being a lawyer is simply unmentioned -> NOT_ENOUGH_INFO.
-
-Reply with ONLY a JSON object and no other text:
-{"rationale": "cite what the text explicitly states or note what is unmentioned", "evidence_ids": ["id", ...], "verdict": "SUPPORTED" | "REFUTED" | "NOT_ENOUGH_INFO"}"""
-
+with open("prompt.md", "r") as f:
+    SYSTEM = f.read()
 
 def parse(text: str) -> Optional[Verdict]:
     text_clean = text.strip()
