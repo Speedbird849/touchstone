@@ -10,7 +10,7 @@ from verdict import judge
 from tqdm import tqdm
 
 
-def run(eval_path="evalset_v2.jsonl", corpus_path="corpus/test.txt", k=3, mode="hybrid", use_guardrails=False, limit=None):
+def run(eval_path="evalset_fever.jsonl", corpus_path="corpus/fever.txt", k=5, mode="hybrid", use_guardrails=True, limit=None):
     retriever = Retriever(load_passages(corpus_path), mode=mode)
     guardrail_engine = None
     if use_guardrails:
@@ -21,6 +21,10 @@ def run(eval_path="evalset_v2.jsonl", corpus_path="corpus/test.txt", k=3, mode="
     rows = [json.loads(line) for line in open(eval_path) if line.strip()]
     if limit is not None:
         rows = rows[:limit]
+
+    dataset_name = "FEVER" if "fever" in eval_path else "TEST"
+    guard_status = "ENABLED" if use_guardrails else "DISABLED"
+    print(f"\n=== Evaluation: {dataset_name} ({len(rows)} claims) | k={k} | mode={mode} | guardrails={guard_status} ===\n")
 
     correct = hits = n_gold = done = 0
     toks = gen_secs = 0.0
@@ -61,14 +65,46 @@ def run(eval_path="evalset_v2.jsonl", corpus_path="corpus/test.txt", k=3, mode="
 
 if __name__ == "__main__":
     import sys
-    use_guardrails = "--guardrails" in sys.argv or "-g" in sys.argv
+    import re
+
+    # Defaults: FEVER, k=5, guardrails=True
+    eval_path = "evalset_fever.jsonl"
+    corpus_path = "corpus/fever.txt"
+    k = 5
+    use_guardrails = True
+    mode = "hybrid"
     limit = None
-    for i, arg in enumerate(sys.argv):
-        if arg == "--limit" and i + 1 < len(sys.argv):
+
+    # Switch to old test set if requested
+    if "--test" in sys.argv:
+        eval_path = "evalset_v2.jsonl"
+        corpus_path = "corpus/test.txt"
+
+    # Disable guardrails if requested
+    if any(arg in sys.argv for arg in ("--no_guard", "--no-guard", "--no_guardrails", "--no-guardrails")):
+        use_guardrails = False
+
+    # Retrieval mode overrides
+    if "--dense" in sys.argv:
+        mode = "dense"
+    elif "--bm25" in sys.argv:
+        mode = "bm25"
+
+    # Parse k and limit
+    for i, arg in enumerate(sys.argv[1:], 1):
+        m = re.match(r"^--?k(\d+)$", arg)
+        if m:
+            k = int(m.group(1))
+        elif arg in ("-k", "--k") and i < len(sys.argv) - 1 and sys.argv[i + 1].isdigit():
+            k = int(sys.argv[i + 1])
+        elif arg == "--limit" and i < len(sys.argv) - 1 and sys.argv[i + 1].isdigit():
             limit = int(sys.argv[i + 1])
-    if "--fever" in sys.argv:
-        k = 5 if "--k5" in sys.argv else 3
-        mode = "dense" if "--dense" in sys.argv else "bm25" if "--bm25" in sys.argv else "hybrid"
-        run(eval_path="evalset_fever.jsonl", corpus_path="corpus/fever.txt", k=k, mode=mode, use_guardrails=use_guardrails, limit=limit)
-    else:
-        run(use_guardrails=use_guardrails, limit=limit)
+
+    run(
+        eval_path=eval_path,
+        corpus_path=corpus_path,
+        k=k,
+        mode=mode,
+        use_guardrails=use_guardrails,
+        limit=limit,
+    )
