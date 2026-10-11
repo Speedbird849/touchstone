@@ -11,7 +11,7 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
 class GuardrailEngine:
     def __init__(self, model_name="MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli"):
-        self.device = "mps" if torch.backends.mps.is_available() else "cpu"
+        self.device = "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
         self.model = AutoModelForSequenceClassification.from_pretrained(model_name).to(self.device)
         self.model.eval()
@@ -145,11 +145,21 @@ class GuardrailEngine:
             if matched:
                 target_passages = matched
 
+        # If multiple passages were cited, evaluate joint/multi-hop evidence as well
+        eval_candidates = list(target_passages)
+        if len(target_passages) > 1:
+            combined_candidate = {
+                "id": "+".join(p["id"] for p in target_passages),
+                "text": " ".join(p["text"] for p in target_passages),
+                "sentence_ids": [sid for p in target_passages for sid in p.get("sentence_ids", [])],
+            }
+            eval_candidates.append(combined_candidate)
+
         # 3. Run NLI cross-encoder
-        nli_check = self.verify_nli(claim, target_passages)
+        nli_check = self.verify_nli(claim, eval_candidates)
         nli_verdict = nli_check["nli_verdict"]
 
-        # 4. Decision Matrix
+        # 4. Decision Matrix: NLI acts as strict compliance gatekeeper
         final_verdict = llm_verdict
         status = "AGREEMENT"
 
@@ -161,13 +171,21 @@ class GuardrailEngine:
             final_verdict = "NOT_ENOUGH_INFO"
             status = "OVERREACH_DOWNGRADED"
         elif llm_verdict == "SUPPORTED" and nli_verdict == "NOT_ENOUGH_INFO":
-            # Guardrail intercepts hallucinated support
+            # Guardrail intercepts hallucinated support when evidence is purely neutral
             final_verdict = "NOT_ENOUGH_INFO"
             status = "HALLUCINATION_DOWNGRADED"
-        elif nli_verdict in ("SUPPORTED", "REFUTED") and nli_check["confidence"] >= 0.85:
-            # High-confidence NLI override when LLM is uncertain
-            final_verdict = nli_verdict
-            status = "NLI_OVERRIDE"
+        elif llm_verdict == "SUPPORTED" and nli_verdict == "REFUTED" and nli_check["confidence"] >= 0.85:
+            # Evidence directly contradicts the claim that the LLM mistakenly supported
+            final_verdict = "REFUTED"
+            status = "NLI_REFUTED_OVERRIDE"
+        elif llm_verdict == "REFUTED" and nli_verdict == "SUPPORTED" and nli_check["confidence"] >= 0.85:
+            # Evidence directly entails the claim that the LLM mistakenly refuted
+            final_verdict = "SUPPORTED"
+            status = "NLI_SUPPORT_OVERRIDE"
+        else:
+            # When LLM decided NOT_ENOUGH_INFO, trust LLM's careful omission analysis
+            final_verdict = llm_verdict
+            status = "AGREEMENT"
 
         return {
             "verdict": final_verdict,

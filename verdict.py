@@ -1,11 +1,12 @@
 from __future__ import annotations
 
 from typing import Literal, Optional
+import os
 import re
 import ollama
 from pydantic import BaseModel, Field, ValidationError
 
-MODEL = "qwen3.5:4b-mlx"
+MODEL = os.getenv("OLLAMA_MODEL", "qwen3.5:4b-mlx")
 
 
 class Verdict(BaseModel):
