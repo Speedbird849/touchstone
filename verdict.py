@@ -74,7 +74,7 @@ def _query_ollama(messages):
         raise
 
 
-def judge(claim, evidence, retries=1):
+def judge(claim, evidence, retries=1, guardrail_engine=None):
     context = "\n".join(f"[{p['id']}] {p['text']}" for p in evidence)
     messages = [
         {"role": "system", "content": SYSTEM},
@@ -85,8 +85,14 @@ def judge(claim, evidence, retries=1):
         stats = {"tokens": resp.eval_count or 0, "secs": (resp.eval_duration or 0) / 1e9}
         out = parse(resp["message"]["content"])
         if out:
-            return {**out.model_dump(), "_stats": stats}
-    return {"verdict": "PARSE_ERROR", "evidence_ids": [], "rationale": resp["message"]["content"], "_stats": stats}
+            res = {**out.model_dump(), "_stats": stats}
+            if guardrail_engine is not None:
+                return guardrail_engine.arbitrate(claim, evidence, res)
+            return res
+    fallback = {"verdict": "PARSE_ERROR", "evidence_ids": [], "rationale": resp["message"]["content"], "_stats": stats}
+    if guardrail_engine is not None:
+        return guardrail_engine.arbitrate(claim, evidence, fallback)
+    return fallback
 
 if __name__ == "__main__":
     from loader import load_passages
