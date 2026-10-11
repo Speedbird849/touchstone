@@ -1,42 +1,20 @@
-# Touchstone: High-Precision Fact-Checking RAG with Citation-Guided Guardrails
+# Touchstone: High-Precision Arbitration RAG with Citation-Guided Guardrails
 
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch MPS](https://img.shields.io/badge/PyTorch-Metal%20%2F%20MPS-red.svg)](https://pytorch.org/)
 [![Benchmark FEVER](https://img.shields.io/badge/Benchmark-FEVER-green.svg)](https://fever.ai/)
 
-Touchstone is an automated claim verification and arbritration framework designed for compliance-grade precision. It pairs dense-sparse hybrid retrieval with an asymmetric **Generative–Discriminative Guardrail Engine**, achieving **80.0% verdict accuracy** and **90.0% Recall@5** on a balanced 300-claim FEVER benchmark using a local 4B-parameter model.
+Touchstone is an automated claim verification and arbitration framework designed for compliance-grade precision. It pairs dense-sparse hybrid retrieval with an asymmetric **Generative–Discriminative Guardrail Engine**, achieving **80.0% verdict accuracy** and **90.0% Recall@5** on a balanced 300-claim FEVER benchmark using a local 4B-parameter model.
 
 ---
 
-## Architecture
+## System Architecture
 
-```mermaid
-flowchart TD
-    Claim(["Input Claim"]) --> Ret["Hybrid Retriever\n(BGE-Small + BM25 + RRF)"]
-    Ret -->|Top-k Paragraphs| Ctx[Retrieved Context]
-    
-    Ctx --> Gen["Generative Reasoner\n(Qwen 3.5 4B)"]
-    Claim --> Gen
-    
-    Gen -->|Draft Verdict + Citations| Arb["Citation-Guided Arbiter"]
-    
-    subgraph GuardrailEngine ["Guardrail Engine"]
-        CiteVal["Citation Validator"]
-        TopAlign["Topical Filter"]
-        MultiHop["Multi-Hop Concatenation"]
-        DeBERTa["NLI Cross-Encoder\n(DeBERTa-v3)"]
-        DecMatrix{"Asymmetric Decision Matrix"}
-        
-        CiteVal --> DecMatrix
-        TopAlign --> DeBERTa
-        MultiHop --> DeBERTa
-        DeBERTa --> DecMatrix
-    end
-    
-    Arb --> GuardrailEngine
-    Ctx --> Arb
-    DecMatrix --> Final(["Audited Verdict\n(SUPPORTED | REFUTED | NOT_ENOUGH_INFO)"])
-```
+Touchstone operates as a three-stage verification pipeline:
+
+1. **Hybrid Retrieval**: Queries are scored concurrently via dense semantic vectors (`BAAI/bge-small-en-v1.5`) and sparse lexical matching (`rank_bm25`). Ranks are fused via Reciprocal Rank Fusion (RRF, $k=60$) over 5-sentence paragraph chunks to prevent context starvation.
+2. **Generative Compliance Reasoner**: A local model (`qwen3.5:4b`) analyzes the retrieved evidence under strict legal-grade compliance definitions, outputting a draft verdict, explanation, and cited passage IDs.
+3. **Citation-Guided Guardrail Engine**: A discriminative cross-encoder (`DeBERTa-v3`) deterministically validates the cited IDs, filters topical distractors, concatenates multi-hop premises, and arbitrates the final verdict through an asymmetric compliance matrix.
 
 ---
 
