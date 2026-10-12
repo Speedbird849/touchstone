@@ -6,89 +6,173 @@ Combines a discriminative NLI cross-encoder with deterministic citation validati
 import warnings
 warnings.filterwarnings("ignore", message="urllib3 v2 only supports OpenSSL")
 
+import re
+
 import torch
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
+STOPWORDS = {"the", "a", "an", "is", "was", "are", "were", "in", "on", "at", "by", "for", "with", "about", "against", "between", "into", "through", "during", "before", "after", "above", "below", "to", "from", "up", "down", "of", "and", "or", "but", "so", "that", "this", "these", "those", "it", "its"}
+
+_SENT_SPLIT = re.compile(r"(?<=[.!?])\s+")
+
+
+def split_sentences(text, max_sentences=8):
+    """Split a passage into sentence windows for focused NLI scoring.
+
+    Falls back to the whole text when no sentence boundary is found.
+    """
+    parts = [s.strip() for s in _SENT_SPLIT.split(text.strip()) if s.strip()]
+    sents = [s for s in parts if len(re.findall(r"\w+", s)) >= 3]
+    return (sents or [text.strip()])[:max_sentences]
+
+
 class GuardrailEngine:
-    def __init__(self, model_name="MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli"):
+    def __init__(self, model_name="MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli",
+                 nli_threshold=0.65, entail_floor=0.30, contra_cap=0.40,
+                 use_sentence_window=True):
         self.device = "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
         self.model = AutoModelForSequenceClassification.from_pretrained(model_name).to(self.device)
         self.model.eval()
         self.id2label = self.model.config.id2label
+        # Hard verdict threshold (high-precision overrides) vs soft-gate band:
+        # SUPPORTED is downgraded only if focused entailment < entail_floor
+        # or contradiction > contra_cap. Fit on tune split — see calibrate_nli.py.
+        self.nli_threshold = nli_threshold
+        self.entail_floor = entail_floor
+        self.contra_cap = contra_cap
+        self.use_sentence_window = use_sentence_window
 
-    def verify_nli(self, claim, passages, threshold=0.65):
+    def verify_nli(self, claim, passages, threshold=None):
         """
         Runs batched NLI cross-encoder inference across all candidate passages.
+
+        Each passage is scored whole AND as sentence windows (when
+        ``use_sentence_window`` is set): long paragraphs dilute cross-attention,
+        so the focused per-sentence entailment signal is tracked alongside the
+        paragraph signal. Both feed ``best_entailment`` / ``best_contradiction``
+        as a max over topically aligned windows.
         Returns aggregated entailment, contradiction, and neutral scores.
         """
+        if threshold is None:
+            threshold = self.nli_threshold
         if not passages:
             return {
                 "nli_verdict": "NOT_ENOUGH_INFO",
                 "confidence": 1.0,
-                "best_entailment": 0.0,
-                "best_contradiction": 0.0,
+                "best_entailment": {"score": 0.0, "id": None},
+                "best_contradiction": {"score": 0.0, "id": None},
+                "sentence_contra_max": {"score": 0.0, "id": None},
+                "primary_evidence_id": None,
                 "passage_scores": [],
             }
 
-        pairs_p = [p["text"] for p in passages]
-        pairs_h = [claim] * len(passages)
+        claim_words = set(re.findall(r"\b\w{3,}\b", claim.lower())) - STOPWORDS
 
-        inputs = self.tokenizer(
-            pairs_p,
-            pairs_h,
-            padding=True,
-            truncation=True,
-            max_length=512,
-            return_tensors="pt",
-        ).to(self.device)
+        # Build batched items: (paragraph, sentence windows...) per passage
+        items = []
+        for p in passages:
+            pid = p["id"]
+            id_words = set(re.findall(r"\b\w{3,}\b", pid.replace("_", " ").lower()))
+            items.append({"pid": pid, "text": p["text"], "kind": "para",
+                          "idx": -1, "id_words": id_words})
+            if self.use_sentence_window:
+                for i, sent in enumerate(split_sentences(p.get("text", ""))):
+                    items.append({"pid": pid, "text": sent, "kind": "sent",
+                                  "idx": i, "id_words": id_words})
 
+        # Micro-batched inference (re-tokenized per micro-batch for tight
+        # padding): sentence windows + the joint-concat candidate inflate the
+        # pair count ~6x; a single MPS batch OOMs.
+        premises = [it["text"] for it in items]
+        probs = []
+        micro = 8
         with torch.no_grad():
-            logits = self.model(**inputs).logits
-            probs = torch.softmax(logits, dim=-1).cpu().tolist()
+            for s in range(0, len(items), micro):
+                chunk_inputs = self.tokenizer(
+                    premises[s:s + micro],
+                    [claim] * min(micro, len(items) - s),
+                    padding=True,
+                    truncation=True,
+                    max_length=512,
+                    return_tensors="pt",
+                ).to(self.device)
+                logits = self.model(**chunk_inputs).logits
+                probs.extend(torch.softmax(logits, dim=-1).cpu().tolist())
+        if self.device == "mps":
+            torch.mps.empty_cache()
 
         passage_scores = []
         max_entail = 0.0
-        entail_pid = None
+        entail_src = None
+        # Hard contradiction comes from whole-paragraph windows only: lone
+        # sentences spike spurious contradiction on name variants (e.g. Hedda
+        # Tesman vs Hedda Gabler) while the paragraph overall entails.
+        # Sentence-level contradiction is still exposed via
+        # ``sentence_contra_max`` for the soft gate.
         max_contra = 0.0
-        contra_pid = None
+        contra_src = None
+        sent_contra_max = 0.0
+        sent_contra_src = None
 
-        STOPWORDS = {"the", "a", "an", "is", "was", "are", "were", "in", "on", "at", "by", "for", "with", "about", "against", "between", "into", "through", "during", "before", "after", "above", "below", "to", "from", "up", "down", "of", "and", "or", "but", "so", "that", "this", "these", "those", "it", "its"}
-        import re
-        claim_words = set(re.findall(r"\b\w{3,}\b", claim.lower())) - STOPWORDS
-
-        for p, prob in zip(passages, probs):
-            # DeBERTa index: 0: entailment, 1: neutral, 2: contradiction
-            e_score, n_score, c_score = prob[0], prob[1], prob[2]
-
-            # Verify topical overlap: candidate passage must share at least one content word with the claim
-            p_text = (p.get("text", "") + " " + p.get("id", "").replace("_", " ")).lower()
-            p_words = set(re.findall(r"\b\w{3,}\b", p_text))
-            is_topical = bool(claim_words & p_words) if claim_words else True
+        for p in passages:
+            pid = p["id"]
+            para_entry = sent_best_e = sent_best_c = None
+            for it, prob in zip(items, probs):
+                if it["pid"] != pid:
+                    continue
+                # DeBERTa index: 0: entailment, 1: neutral, 2: contradiction
+                e_score, n_score, c_score = prob[0], prob[1], prob[2]
+                # Topical overlap: window must share a content word with the
+                # claim; sentence windows may also match via the parent page id
+                # (entity names live there, e.g. Hedda_Gabler).
+                w_text = (it["text"] + " " + " ".join(it["id_words"])).lower()
+                w_words = set(re.findall(r"\b\w{3,}\b", w_text))
+                is_topical = bool(claim_words & w_words) if claim_words else True
+                entry = {
+                    "kind": it["kind"], "idx": it["idx"],
+                    "entailment": e_score, "neutral": n_score,
+                    "contradiction": c_score, "topical": is_topical,
+                    "text": it["text"][:160],
+                }
+                if it["kind"] == "para":
+                    para_entry = entry
+                else:
+                    if sent_best_e is None or e_score > sent_best_e["entailment"]:
+                        sent_best_e = entry
+                    if sent_best_c is None or c_score > sent_best_c["contradiction"]:
+                        sent_best_c = entry
+                if is_topical:
+                    if e_score > max_entail:
+                        max_entail = e_score
+                        entail_src = {"id": pid, "kind": it["kind"], "idx": it["idx"]}
+                    if it["kind"] == "para":
+                        if c_score > max_contra:
+                            max_contra = c_score
+                            contra_src = {"id": pid, "kind": it["kind"], "idx": it["idx"]}
+                    else:
+                        if c_score > sent_contra_max:
+                            sent_contra_max = c_score
+                            sent_contra_src = {"id": pid, "kind": it["kind"], "idx": it["idx"]}
 
             passage_scores.append({
-                "id": p["id"],
-                "entailment": e_score,
-                "neutral": n_score,
-                "contradiction": c_score,
-                "topical": is_topical,
+                "id": pid,
+                "entailment": para_entry["entailment"] if para_entry else 0.0,
+                "neutral": para_entry["neutral"] if para_entry else 0.0,
+                "contradiction": para_entry["contradiction"] if para_entry else 0.0,
+                "topical": para_entry["topical"] if para_entry else False,
+                "sent_best_entailment": (sent_best_e["entailment"] if sent_best_e else None),
+                "sent_best_contra": (sent_best_c["contradiction"] if sent_best_c else None),
             })
-            if is_topical:
-                if e_score > max_entail:
-                    max_entail = e_score
-                    entail_pid = p["id"]
-                if c_score > max_contra:
-                    max_contra = c_score
-                    contra_pid = p["id"]
 
         if max_contra >= threshold:
             nli_verdict = "REFUTED"
             conf = max_contra
-            primary_id = contra_pid
+            primary_id = contra_src["id"] if contra_src else None
         elif max_entail >= threshold:
             nli_verdict = "SUPPORTED"
             conf = max_entail
-            primary_id = entail_pid
+            primary_id = entail_src["id"] if entail_src else None
         else:
             nli_verdict = "NOT_ENOUGH_INFO"
             conf = 1.0 - max(max_entail, max_contra)
@@ -97,8 +181,9 @@ class GuardrailEngine:
         return {
             "nli_verdict": nli_verdict,
             "confidence": conf,
-            "best_entailment": {"score": max_entail, "id": entail_pid},
-            "best_contradiction": {"score": max_contra, "id": contra_pid},
+            "best_entailment": {"score": max_entail, **(entail_src or {"id": None})},
+            "best_contradiction": {"score": max_contra, **(contra_src or {"id": None})},
+            "sentence_contra_max": {"score": sent_contra_max, **(sent_contra_src or {"id": None})},
             "primary_evidence_id": primary_id,
             "passage_scores": passage_scores,
         }
@@ -171,9 +256,19 @@ class GuardrailEngine:
             final_verdict = "NOT_ENOUGH_INFO"
             status = "OVERREACH_DOWNGRADED"
         elif llm_verdict == "SUPPORTED" and nli_verdict == "NOT_ENOUGH_INFO":
-            # Guardrail intercepts hallucinated support when evidence is purely neutral
-            final_verdict = "NOT_ENOUGH_INFO"
-            status = "HALLUCINATION_DOWNGRADED"
+            # Soft gate: paragraph-level neutral with moderate focused
+            # sentence entailment usually means attention dilution across the
+            # 5-sentence chunk, not hallucination. Downgrade only on
+            # negligible entailment or live contradiction (either window).
+            e_score = nli_check["best_entailment"]["score"]
+            c_score = max(nli_check["best_contradiction"]["score"],
+                          nli_check.get("sentence_contra_max", {}).get("score", 0.0))
+            if e_score < self.entail_floor or c_score > self.contra_cap:
+                final_verdict = "NOT_ENOUGH_INFO"
+                status = "HALLUCINATION_DOWNGRADED"
+            else:
+                final_verdict = "SUPPORTED"
+                status = "SOFT_GATE_PRESERVED"
         elif llm_verdict == "SUPPORTED" and nli_verdict == "REFUTED" and nli_check["confidence"] >= 0.85:
             # Evidence directly contradicts the claim that the LLM mistakenly supported
             final_verdict = "REFUTED"

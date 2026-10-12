@@ -10,7 +10,7 @@ from verdict import judge
 from tqdm import tqdm
 
 
-def run(eval_path="evalset_fever.jsonl", corpus_path="corpus/fever.txt", k=5, mode="hybrid", use_guardrails=True, limit=None):
+def run(eval_path="evalset_fever.jsonl", corpus_path="corpus/fever.txt", k=5, mode="hybrid", use_guardrails=True, limit=None, trace_path=None):
     retriever = Retriever(load_passages(corpus_path), mode=mode)
     guardrail_engine = None
     if use_guardrails:
@@ -30,6 +30,8 @@ def run(eval_path="evalset_fever.jsonl", corpus_path="corpus/fever.txt", k=5, mo
     toks = gen_secs = 0.0
     confusion = Counter()
     guardrail_actions = Counter()
+    trace_rows = []
+    trace_fh = open(trace_path, "w") if trace_path else None
     bar = tqdm(rows, unit="claim")
     for row in bar:
         evidence = retriever.search(row["claim"], k=k)
@@ -46,6 +48,22 @@ def run(eval_path="evalset_fever.jsonl", corpus_path="corpus/fever.txt", k=5, mo
         if row["gold_ids"]:
             n_gold += 1
             hits += any(any(gid in p.get("sentence_ids", [p["id"]]) for gid in row["gold_ids"]) for p in evidence)
+        if trace_fh:
+            nli = result.get("nli_details", {}) or {}
+            be = nli.get("best_entailment", {}) or {}
+            bc = nli.get("best_contradiction", {}) or {}
+            sc = nli.get("sentence_contra_max", {}) or {}
+            trace_fh.write(json.dumps({
+                "claim": row["claim"],
+                "label": row["label"],
+                "got": got,
+                "guardrail_status": result.get("guardrail_status"),
+                "nli_hard": nli.get("nli_verdict"),
+                "E": be.get("score") if isinstance(be, dict) else be,
+                "C": bc.get("score") if isinstance(bc, dict) else bc,
+                "sentC": sc.get("score") if isinstance(sc, dict) else sc,
+                "rationale": result.get("rationale", ""),
+            }) + "\n")
         if got != row["label"]:
             status_note = f" [{result.get('guardrail_status')}]" if "guardrail_status" in result else ""
             tqdm.write(f"MISS{status_note}  want={row['label']}  got={got}  | {row['claim']}\n      why: {result.get('rationale', result)}")
@@ -61,6 +79,10 @@ def run(eval_path="evalset_fever.jsonl", corpus_path="corpus/fever.txt", k=5, mo
         print("\nguardrail interventions:")
         for action, cnt in guardrail_actions.most_common():
             print(f"  {action:25} {cnt}")
+
+    if trace_fh:
+        trace_fh.close()
+        print(f"\ntraces -> {trace_path}")
 
 
 if __name__ == "__main__":
@@ -94,6 +116,13 @@ if __name__ == "__main__":
         if i < len(sys.argv) - 1:
             eval_path = sys.argv[i + 1]
 
+    # Per-claim traces for threshold analysis: --trace <path>
+    trace_path = None
+    if "--trace" in sys.argv:
+        i = sys.argv.index("--trace")
+        if i < len(sys.argv) - 1:
+            trace_path = sys.argv[i + 1]
+
     # Disable guardrails if requested
     if any(arg in sys.argv for arg in ("--no_guard", "--no-guard", "--no_guardrails", "--no-guardrails")):
         use_guardrails = False
@@ -121,4 +150,5 @@ if __name__ == "__main__":
         mode=mode,
         use_guardrails=use_guardrails,
         limit=limit,
+        trace_path=trace_path,
     )
