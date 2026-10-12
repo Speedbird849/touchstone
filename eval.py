@@ -80,6 +80,20 @@ if __name__ == "__main__":
         eval_path = "evalset_v2.jsonl"
         corpus_path = "corpus/test.txt"
 
+    # Tune/test splits (stratified, seed 42 — see evalset_fever_500.jsonl)
+    if "--tune" in sys.argv:
+        eval_path = "evalset_fever_tune.jsonl"
+        corpus_path = "corpus/fever.txt"
+    if "--fever-test" in sys.argv:
+        eval_path = "evalset_fever_test.jsonl"
+        corpus_path = "corpus/fever.txt"
+
+    # Arbitrary eval file: --eval <path>
+    if "--eval" in sys.argv:
+        i = sys.argv.index("--eval")
+        if i < len(sys.argv) - 1:
+            eval_path = sys.argv[i + 1]
+
     # Disable guardrails if requested
     if any(arg in sys.argv for arg in ("--no_guard", "--no-guard", "--no_guardrails", "--no-guardrails")):
         use_guardrails = False

@@ -83,7 +83,9 @@ def prepare(num_per_class=100, max_sentences_per_chunk=5, out_dir="corpus"):
     corpus_file.parent.mkdir(exist_ok=True)
     with open(corpus_file, "w") as f:
         for ch in chunks:
-            sids_str = ",".join(ch["sentence_ids"])
+            # NOTE: sids joined with ';' — page titles may contain commas
+            # (e.g. Syracuse,_New_York), so ',' is not a safe separator.
+            sids_str = ";".join(ch["sentence_ids"])
             f.write(f"[{ch['id']} | sids: {sids_str}] {ch['text']}\n\n")
 
     # Save claims to evalset_fever.jsonl
