@@ -10,7 +10,7 @@ from verdict import judge
 from tqdm import tqdm
 
 
-def run(eval_path="evalset_fever.jsonl", corpus_path="corpus/fever.txt", k=5, mode="hybrid", use_guardrails=True, limit=None, trace_path=None):
+def run(eval_path="evalset_fever_test.jsonl", corpus_path="corpus/fever.txt", k=5, mode="hybrid", use_guardrails=True, limit=None, trace_path=None):
     retriever = Retriever(load_passages(corpus_path), mode=mode)
     guardrail_engine = None
     if use_guardrails:
@@ -22,7 +22,19 @@ def run(eval_path="evalset_fever.jsonl", corpus_path="corpus/fever.txt", k=5, mo
     if limit is not None:
         rows = rows[:limit]
 
-    dataset_name = "FEVER" if "fever" in eval_path else "TEST"
+    if "fever_test" in eval_path:
+        dataset_name = "FEVER-TEST (held-out)"
+    elif "fever_tune" in eval_path:
+        dataset_name = "FEVER-TUNE"
+    elif "fever_500" in eval_path:
+        dataset_name = "FEVER-500"
+    elif "fever" in eval_path:
+        dataset_name = "FEVER-LEGACY"
+    elif "test" in eval_path or "v2" in eval_path:
+        dataset_name = "TRIAL"
+    else:
+        dataset_name = eval_path
+
     guard_status = "ENABLED" if use_guardrails else "DISABLED"
     print(f"\n=== Evaluation: {dataset_name} ({len(rows)} claims) | k={k} | mode={mode} | guardrails={guard_status} ===\n")
 
@@ -89,24 +101,34 @@ if __name__ == "__main__":
     import sys
     import re
 
-    # Defaults: FEVER, k=5, guardrails=True
-    eval_path = "evalset_fever.jsonl"
+    # Defaults: Held-out FEVER test split (200 claims), k=5, guardrails=True
+    eval_path = "evalset_fever_test.jsonl"
     corpus_path = "corpus/fever.txt"
     k = 5
     use_guardrails = True
     mode = "hybrid"
     limit = None
+    trace_path = None
 
-    # Switch to old test set if requested
-    if "--test" in sys.argv:
+    # Dataset split flags
+    if "--trial" in sys.argv:
+        # Small synthetic trial corpus
         eval_path = "evalset_v2.jsonl"
         corpus_path = "corpus/test.txt"
-
-    # Tune/test splits (stratified, seed 42 — see evalset_fever_500.jsonl)
-    if "--tune" in sys.argv:
+    elif "--tune" in sys.argv:
+        # 300-claim development / tuning split
         eval_path = "evalset_fever_tune.jsonl"
         corpus_path = "corpus/fever.txt"
-    if "--fever-test" in sys.argv:
+    elif any(arg in sys.argv for arg in ("--full", "--500", "--fever-500")):
+        # Full 500-claim FEVER dataset
+        eval_path = "evalset_fever_500.jsonl"
+        corpus_path = "corpus/fever.txt"
+    elif "--legacy" in sys.argv:
+        # Legacy 300-claim dataset
+        eval_path = "evalset_fever.jsonl"
+        corpus_path = "corpus/fever.txt"
+    elif "--fever-test" in sys.argv:
+        # Explicit flag for held-out test split (matches default)
         eval_path = "evalset_fever_test.jsonl"
         corpus_path = "corpus/fever.txt"
 
@@ -116,14 +138,13 @@ if __name__ == "__main__":
         if i < len(sys.argv) - 1:
             eval_path = sys.argv[i + 1]
 
-    # Per-claim traces for threshold analysis: --trace <path>
-    trace_path = None
+    # Per-claim trace logging: --trace <path>
     if "--trace" in sys.argv:
         i = sys.argv.index("--trace")
         if i < len(sys.argv) - 1:
             trace_path = sys.argv[i + 1]
 
-    # Disable guardrails if requested
+    # Disable guardrails
     if any(arg in sys.argv for arg in ("--no_guard", "--no-guard", "--no_guardrails", "--no-guardrails")):
         use_guardrails = False
 

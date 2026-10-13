@@ -82,20 +82,23 @@ ollama run qwen3.5:4b-mlx
 ### Running Evaluations
 
 ```bash
-# Run full FEVER evaluation (k=5, Guardrails ON)
+# Run held-out FEVER test split (200 claims, k=5, Guardrails ON by default)
 python3 eval.py
 
-# Fast checkpoint (first 30 claims)
+# Run development / tuning split (300 claims) with trace logging
+python3 eval.py --tune --trace traces_tune.jsonl
+
+# Fast checkpoint (e.g. first 30 claims)
 python3 eval.py --limit 30
 
 # Disable guardrails (raw LLM baseline)
-python3 eval.py --no_guard
+python3 eval.py --no-guard
 
-# Change retrieval k parameter
-python3 eval.py --k3
+# Run full 500-claim combined dataset
+python3 eval.py --full
 
-# Evaluate on synthetic verification dataset
-python3 eval.py --test --k3
+# Run quick synthetic trial verification dataset
+python3 eval.py --trial --k3
 ```
 
 ### Python API
